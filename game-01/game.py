@@ -4,6 +4,8 @@ Decisions.  Should it return if the non-integer value is never reached? (e.g.: [
 def sumsTwo(arr, n: int):
     values = set()
     try:
+        '''if it should return if the error value is never reached, move contents of this loop inside the other.
+        '''
         for i in arr:
             if type(i) != int:
                 raise ValueError
