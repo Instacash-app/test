@@ -22,7 +22,7 @@ export class GildedRose {
     updateQuality() {
         for (var item of this.items){
             if(!itemOperation.isLegendary(item)){
-                item = itemOperation.updateItem(item)
+                item = itemOperation.updateItem(item);
             }
         }
         return this.items;
