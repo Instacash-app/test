@@ -81,7 +81,7 @@ export function updateItem(item: Item){
     if(isAgedBrie(item)){
         item = raiseQuality(item);
         item.sellIn -= 1;
-        //Aged Brie doesnt care about aging past sellIn, so no check for sellIn <= 0
+
     } else if(isBackstagePass(item)){
         /**amount - gets the amount to increase quality, dependant on proximity to sellIn**/
         var amount: number = Math.ceil((10.1 - item.sellIn) / 5)
@@ -91,7 +91,8 @@ export function updateItem(item: Item){
         if(item.sellIn <= 0){
             item.quality = 0;
         }
-    }else{ //normie item
+
+    }else{ /**no special case - could still be conjured **/
         var degraded: number = isDegraded(item) ?  2 :  1; //if degraded, twice as fast down
         var conjured: number = isConjured(item) ? 2 : 1;   //if conjured, twice as fast down
         item = decreaseQuality(item, degraded * conjured);

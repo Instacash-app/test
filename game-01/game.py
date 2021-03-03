@@ -15,6 +15,6 @@ def sumsTwo(arr, n: int):
             if (n-i) in values:
                 return [n-i, i]
             values.add(i)
-        return [0]
+        return "No answer found."
     except ValueError:
         return "Array must only contain integer values. Error: " + str(type(i))
