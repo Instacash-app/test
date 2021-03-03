@@ -19,6 +19,9 @@ export class GildedRose {
         this.items = items;
     }
 
+    /**
+    *updates the quality of the item list in GildedRose object
+    */
     updateQuality() {
         for (var item of this.items){
             if(!itemOperation.isLegendary(item)){

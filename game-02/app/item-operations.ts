@@ -1,4 +1,9 @@
 import {Item} from "./gilded-rose"
+/**
+*@fileoverview Performs several operations related to Item objects
+*@author https://github.com/hmontoyag/
+*/
+
 
 /**
 *Returns true if item is Legendary
@@ -78,13 +83,10 @@ export function updateItem(item: Item){
         item.sellIn -= 1;
         //Aged Brie doesnt care about aging past sellIn, so no check for sellIn <= 0
     } else if(isBackstagePass(item)){
-        if(item.sellIn <= 10){
-            item = raiseQuality(item);
-        }
-        if(item.sellIn <= 5){
-            item = raiseQuality(item);
-        }
-        item = raiseQuality(item);
+        /**amount - gets the amount to increase quality, dependant on proximity to sellIn**/
+        var amount: number = Math.ceil((10.1 - item.sellIn) / 5)
+        amount = amount > 0 && amount < 3 ? amount : 0
+        item = raiseQuality(item, amount+1);
         item.sellIn -= 1;
         if(item.sellIn <= 0){
             item.quality = 0;
