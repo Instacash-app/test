@@ -18,5 +18,3 @@ def sumsTwo(arr, n: int):
         return [0]
     except ValueError:
         return "Array must only contain integer values. Error: " + str(type(i))
-
-print(sumsTwo([1,2,3,4,5,6,7,"10"],10))
