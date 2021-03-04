@@ -6,20 +6,15 @@ import {Item} from "./gilded-rose"
 
 
 /**
-*Returns true if item is Legendary
-* **** contains a variable legendary_list     ****
-* **** it  contains the known legendary items ****
+*checks if item is legendary (quality == 80)
 *
 *@param {Item} item - item to check
 *@return {boolean} true if is, false if not
 */
 export function isLegendary(item: Item){
-    //---- LEGENDARY ITEM LIST (name) ----
-    var legendary_list: String[] = [
-        'Sulfuras, Hand of Ragnaros'
-    ];
-    if(legendary_list.indexOf(item.name) > -1){
-        return true;
+    //legendary items have quality 80 and it never alters, so we can use it
+    if(item.quality == 80){
+        return true
     }
     return false;
 }
