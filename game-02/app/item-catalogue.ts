@@ -10,7 +10,7 @@ import * as itemOperation from "./item-operations"
 export abstract class ItemType {
 
     abstract updateItem(item: Item): Item;
-    
+
 }
 
 /**
@@ -64,9 +64,9 @@ class GenericItem implements ItemType {
     }
 }
 /**
-*Gets the right type for the input item
+*Gets the right type for the input item and applies the type's updateItem()
 *@param {Item} item - checks type of this item
-*@return {ItemType} returns an object of the class corresponding to the itemtype
+*@return {Item} returns the item modified according to its type
 */
 export function modifyItem(item: Item): Item {
     var itemType: ItemType;
