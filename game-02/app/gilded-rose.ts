@@ -1,4 +1,5 @@
 import {modifyItem} from "./item-catalogue"
+
 export class Item {
     name: string;
     sellIn: number;

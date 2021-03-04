@@ -1,13 +1,16 @@
 import {Item} from "./gilded-rose"
 import * as itemOperation from "./item-operations"
-
 /**
-*Abstract class for ItemType(s)
-*defined that all types must have an updateItem(item: Item) method
+*@fileoverview contains abstract class ItemType, and then a class for each item
+*category/type, each implementing its own defined logic for updating an item in
+*updateItem().
+*@author https://github.com/hmontoyag/
 */
+
 export abstract class ItemType {
 
     abstract updateItem(item: Item): Item;
+    
 }
 
 /**
