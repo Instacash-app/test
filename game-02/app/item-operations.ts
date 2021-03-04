@@ -26,7 +26,7 @@ export function isLegendary(item: Item){
 *@param {Item} item - item to check
 *@return {boolean} true if is, false if not
 */
-function isBackstagePass(item: Item){
+export function isBackstagePass(item: Item){
     if(item.name.indexOf("Backstage passes to ") > -1){
         return true;
     }
@@ -38,7 +38,7 @@ function isBackstagePass(item: Item){
 *@param {Item} item - item to check
 *@return {boolean} true if is, false if not
 */
-function isAgedBrie(item: Item){
+export function isAgedBrie(item: Item){
     if(item.name == 'Aged Brie'){
         return true;
     }
@@ -50,7 +50,7 @@ function isAgedBrie(item: Item){
 *@param {Item} item - item to check
 *@return {boolean} true if is, false if not
 */
-function isConjured(item: Item){
+export function isConjured(item: Item){
     if(item.name.indexOf('Conjured') == 0){
         return true;
     }
@@ -62,42 +62,11 @@ function isConjured(item: Item){
 *@param {Item} item - item to check
 *@return {boolean} true if is, false if not
 */
-function isDegraded(item: Item){
+export function isDegraded(item: Item){
     if(item.sellIn <= MIN_QUALITY){
         return true;
     }
     return false;
-}
-
-/**
-*updates an item's quality and sellIn date
-*@param {Item} item - item to update
-*@return {Item} the modified item
-*/
-export function updateItem(item: Item){
-    if(isAgedBrie(item)){
-        item = raiseQuality(item);
-        item.sellIn -= 1;
-
-    } else if(isBackstagePass(item)){
-        /**amount - gets the amount to increase quality, dependant on proximity to sellIn**/
-        var amount: number = Math.ceil((10.1 - item.sellIn) / 5)
-        amount = amount > 0 && amount < 3 ? amount : 0
-        item = raiseQuality(item, amount+1);
-        item.sellIn -= 1;
-        if(item.sellIn <= 0){
-            item.quality = 0;
-        }
-
-    }else{ /**no special case - could still be conjured **/
-        var degraded: number = isDegraded(item) ?  2 :  1; //if degraded, twice as fast down
-        var conjured: number = isConjured(item) ? 2 : 1;   //if conjured, twice as fast down
-        item = decreaseQuality(item, degraded * conjured);
-        item.sellIn -= 1;
-
-    }
-
-    return item;
 }
 
 /**
@@ -106,7 +75,7 @@ export function updateItem(item: Item){
 *@param {number} value - value to add, default to 1
 *@return {Item} the modified item
 */
-function raiseQuality(item: Item, value: number = 1){
+export function raiseQuality(item: Item, value: number = 1){
     item.quality += value;
     if(item.quality > MAX_QUALITY){
         item.quality = MAX_QUALITY;
@@ -120,7 +89,7 @@ function raiseQuality(item: Item, value: number = 1){
 *@param {number} value - value to substract, default to 1
 *@return {Item} the modified item
 */
-function decreaseQuality(item: Item, value: number = 1){
+export function decreaseQuality(item: Item, value: number = 1){
     item.quality -= value;
     if(item.quality < MIN_QUALITY){
         item.quality = MIN_QUALITY;

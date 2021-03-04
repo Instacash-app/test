@@ -1,5 +1,4 @@
-import * as itemOperation from "./item-operations"
-
+import {getFactory, ItemFactory} from "./factorin"
 export class Item {
     name: string;
     sellIn: number;
@@ -24,9 +23,8 @@ export class GildedRose {
     */
     updateQuality() {
         for (var item of this.items){
-            if(!itemOperation.isLegendary(item)){
-                item = itemOperation.updateItem(item);
-            }
+            var factory: ItemFactory = getItemFactory(item)
+            item = factory.updateItem(item)
         }
         return this.items;
     }
