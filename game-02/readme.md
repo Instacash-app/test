@@ -43,7 +43,7 @@ Just for clarification, an item can never have its Quality increase above 50, ho
 legendary item and as such its Quality is 80 and it never alters.
 
 ## Decisions
-Besides the refactoring itself to make the code cleaner, avoid duplicate if statements, and decoupling functions as possible, I made the following choices regarding functionality:
+Besides the refactoring itself to make the code cleaner, avoid duplicate if statements, and adding abstract 'factories' (not quite a factory as it isnt creating a new item), I made the following choices regarding functionality:
 
 ### Allowed for future legendary items and backstage passes to also be taken into account
 As is, only 'Sulfuras, the hand of Ragnaros' is a legendary item, and the code tried to detect it by name.  I first made a legendary_items list that could have other legendary items added to it so the isLegendary(item) function could detect others besides Sulfuras.  This wasn't good enough as the list still required manual input to add the new legendary items.  Finally, I decided to have isLegendary(item) check if the item's quality equals 80, as, quoting the rules, "Sulfuras" is a
@@ -51,7 +51,7 @@ legendary item and as such its Quality is 80 and it never alters". Meaning legen
 
 For backstage passes I simply check if the item's name starts with 'Backstage passes to '.  This might not be all-encompassing, but still would allow for some format of new backstage passes to be created.
 
-Aged Brie I decided to leave as is, checking the name for detection.  I suppose eventually (if that is the criteria), a similar change to the one for backstage passes could be added to detect Aged items.
+Aged Brie I decided to leave as is, checking the name for detection.  I suppose eventually (if such is the criteria), a similar change to the one for backstage passes could be added to detect Aged items.
 
 ### For normal and conjured items
-Normal (as in, no special case) items are the only ones affected by the 'Conjured' typing.  Aged Brie doesnt decrease in quality, backstage passes increase until it turns 0, legendary items never change.  So the doubled rate of decrease, affects only normal ones.  For this I decided to convert the conditions isDegraded (if quality is 0) and isConjured into values (1 or 2).  This allows me to pass them to the decreaseQuality() method.  Each of them doubles the rate of decrement, so if both are active, instead of 1, we decrease 1 * 2 * 2, if only one, 1 * 1* 2, if none then 1 * 1 * 1 as normal.
+Generic (as in, no special case) items are the only ones currently affected by the 'Conjured' typing.  Aged Brie doesnt decrease in quality, backstage passes increase until it turns 0, legendary items never change.  However I assumed that in the future, we could have new types (e.g.: Rare but not quite legendary) that do have a decrease in quality and are therefore affected by the 'Conjured' word, and decided against making Conjured items its own type, rather a possible characterisitic of any time that could be affected by it, which again, its only Generic ones for now.
