@@ -6,7 +6,8 @@ import * as itemOperation from "./item-operations"
 *defined that all types must have an updateItem(item: Item) method
 */
 export abstract class ItemType {
-    abstract updateItem(item: Item): Item
+
+    abstract updateItem(item: Item): Item;
 }
 
 /**
@@ -14,6 +15,7 @@ export abstract class ItemType {
 */
 class LegendaryItem implements ItemType {
     public updateItem(item: Item): Item {
+
             return item;
     }
 }
@@ -23,6 +25,7 @@ class LegendaryItem implements ItemType {
 */
 class AgedBrie implements ItemType {
     public updateItem(item: Item): Item {
+
         item = itemOperation.raiseQuality(item);
         item.sellIn -= 1;
         return item;
@@ -34,8 +37,9 @@ class AgedBrie implements ItemType {
 */
 class BackstagePass implements ItemType {
     public updateItem(item: Item): Item{
-        var amount: number = Math.ceil((10.1 - item.sellIn) / 5)
-        amount = amount > 0 && amount < 3 ? amount : 0
+
+        var amount: number = Math.ceil((10.1 - item.sellIn) / 5);
+        amount = amount > 0 && amount < 3 ? amount : 0;
         item = itemOperation.raiseQuality(item, amount+1);
         item.sellIn -= 1;
         if(item.sellIn <= 0){
@@ -48,11 +52,10 @@ class BackstagePass implements ItemType {
 /**
 *Class for normal items (those that dont fall on any category)
 */
-class NormalItem implements ItemType {
+class GenericItem implements ItemType {
     public updateItem(item: Item): Item {
-        var degraded: number = itemOperation.isDegraded(item) ?  2 :  1; //if degraded, twice as fast down
-        var conjured: number = itemOperation.isConjured(item) ? 2 : 1;   //if conjured, twice as fast down
-        item = itemOperation.decreaseQuality(item, degraded * conjured);
+
+        item = itemOperation.decreaseQuality(item, 1);
         item.sellIn -= 1;
         return item;
     }
@@ -62,17 +65,24 @@ class NormalItem implements ItemType {
 *@param {Item} item - checks type of this item
 *@return {ItemType} returns an object of the class corresponding to the itemtype
 */
-export function getItemType(item: Item): ItemType {
-    if(itemOperation.isAgedBrie(item)){
-        return new AgedBrie()
+export function modifyItem(item: Item): Item {
+    var itemType: ItemType;
+    //Aged Brie
+    if(itemOperation.isAgedBrie(item)) {
+        itemType =  new AgedBrie();
 
-    } else if(itemOperation.isBackstagePass(item)){
-        return new BackstagePass()
+    //BackStage Passes
+    } else if(itemOperation.isBackstagePass(item)) {
+        itemType =  new BackstagePass();
 
-    } else if(itemOperation.isLegendary(item)){
-        return new LegendaryItem()
+    //Legendary Items
+    } else if(itemOperation.isLegendary(item)) {
+        itemType =  new LegendaryItem();
 
+    //Generic Items
     } else {
-        return new NormalItem()
+        itemType  =  new GenericItem();
     }
+
+    return itemType.updateItem(item);
 }

@@ -90,6 +90,8 @@ export function raiseQuality(item: Item, value: number = 1){
 *@return {Item} the modified item
 */
 export function decreaseQuality(item: Item, value: number = 1){
+    value = isDegraded(item) ?  value * 2 :  value;
+    value = isConjured(item) ? value * 2 : value;
     item.quality -= value;
     if(item.quality < MIN_QUALITY){
         item.quality = MIN_QUALITY;
