@@ -14,7 +14,7 @@ import {Item} from "./gilded-rose"
 export function isLegendary(item: Item){
     //legendary items have quality 80 and it never alters, so we can use it
     if(item.quality == 80){
-        return true
+        return true;
     }
     return false;
 }
@@ -95,7 +95,7 @@ export function updateItem(item: Item){
 
     }
 
-    return item
+    return item;
 }
 
 /**
@@ -109,7 +109,7 @@ function raiseQuality(item: Item, value: number = 1){
     if(item.quality > 50){
         item.quality = 50;
     }
-    return item
+    return item;
 }
 
 /**
@@ -123,5 +123,5 @@ function decreaseQuality(item: Item, value: number = 1){
     if(item.quality < 0){
         item.quality = 0;
     }
-    return item
+    return item;
 }
