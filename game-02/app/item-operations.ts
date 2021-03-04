@@ -4,7 +4,9 @@ import {Item} from "./gilded-rose"
 *@author https://github.com/hmontoyag/
 */
 
-
+const MAX_QUALITY = 50
+const LEGENDARY_QUALITY = 80
+const MIN_QUALITY = 0
 /**
 *checks if item is legendary (quality == 80)
 *
@@ -13,7 +15,7 @@ import {Item} from "./gilded-rose"
 */
 export function isLegendary(item: Item){
     //legendary items have quality 80 and it never alters, so we can use it
-    if(item.quality == 80){
+    if(item.quality == LEGENDARY_QUALITY){
         return true;
     }
     return false;
@@ -61,7 +63,7 @@ function isConjured(item: Item){
 *@return {boolean} true if is, false if not
 */
 function isDegraded(item: Item){
-    if(item.sellIn <= 0){
+    if(item.sellIn <= MIN_QUALITY){
         return true;
     }
     return false;
@@ -106,8 +108,8 @@ export function updateItem(item: Item){
 */
 function raiseQuality(item: Item, value: number = 1){
     item.quality += value;
-    if(item.quality > 50){
-        item.quality = 50;
+    if(item.quality > MAX_QUALITY){
+        item.quality = MAX_QUALITY;
     }
     return item;
 }
@@ -120,8 +122,8 @@ function raiseQuality(item: Item, value: number = 1){
 */
 function decreaseQuality(item: Item, value: number = 1){
     item.quality -= value;
-    if(item.quality < 0){
-        item.quality = 0;
+    if(item.quality < MIN_QUALITY){
+        item.quality = MIN_QUALITY;
     }
     return item;
 }
