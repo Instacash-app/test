@@ -1,17 +1,27 @@
 import {Item} from "./gilded-rose"
 import * as itemOperation from "./item-operations"
 
-export abstract class ItemFactory {
+/**
+*Abstract class for ItemType(s)
+*defined that all types must have an updateItem(item: Item) method
+*/
+export abstract class ItemType {
     abstract updateItem(item: Item): Item
 }
 
-class LegendaryItemFactory implements ItemFactory {
+/**
+*Class for Legendary Items
+*/
+class LegendaryItem implements ItemType {
     public updateItem(item: Item): Item {
             return item;
     }
 }
 
-class AgedBrieFactory implements ItemFactory {
+/**
+*Class for Aged Brie
+*/
+class AgedBrie implements ItemType {
     public updateItem(item: Item): Item {
         item = itemOperation.raiseQuality(item);
         item.sellIn -= 1;
@@ -19,7 +29,10 @@ class AgedBrieFactory implements ItemFactory {
     }
 }
 
-class BackstagePassFactory implements ItemFactory {
+/**
+*Class for Backstage Passes
+*/
+class BackstagePass implements ItemType {
     public updateItem(item: Item): Item{
         var amount: number = Math.ceil((10.1 - item.sellIn) / 5)
         amount = amount > 0 && amount < 3 ? amount : 0
@@ -32,7 +45,10 @@ class BackstagePassFactory implements ItemFactory {
     }
 }
 
-class NormalItemFactory implements ItemFactory {
+/**
+*Class for normal items (those that dont fall on any category)
+*/
+class NormalItem implements ItemType {
     public updateItem(item: Item): Item {
         var degraded: number = itemOperation.isDegraded(item) ?  2 :  1; //if degraded, twice as fast down
         var conjured: number = itemOperation.isConjured(item) ? 2 : 1;   //if conjured, twice as fast down
@@ -41,18 +57,22 @@ class NormalItemFactory implements ItemFactory {
         return item;
     }
 }
-
-export function getItemFactory(item: Item): ItemFactory {
+/**
+*Gets the right type for the input item
+*@param {Item} item - checks type of this item
+*@return {ItemType} returns an object of the class corresponding to the itemtype
+*/
+export function getItemType(item: Item): ItemType {
     if(itemOperation.isAgedBrie(item)){
-        return new AgedBrieFactory()
+        return new AgedBrie()
 
     } else if(itemOperation.isBackstagePass(item)){
-        return new BackstagePassFactory()
+        return new BackstagePass()
 
     } else if(itemOperation.isLegendary(item)){
-        return new LegendaryItemFactory()
+        return new LegendaryItem()
 
     } else {
-        return new NormalItemFactory()
+        return new NormalItem()
     }
 }

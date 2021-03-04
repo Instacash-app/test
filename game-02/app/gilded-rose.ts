@@ -1,4 +1,4 @@
-import {getFactory, ItemFactory} from "./factorin"
+import {getItemType, ItemType} from "./item-factories"
 export class Item {
     name: string;
     sellIn: number;
@@ -23,8 +23,10 @@ export class GildedRose {
     */
     updateQuality() {
         for (var item of this.items){
-            var factory: ItemFactory = getItemFactory(item)
-            item = factory.updateItem(item)
+
+            var type: ItemType = getItemType(item)
+            item = type.updateItem(item)
+
         }
         return this.items;
     }
